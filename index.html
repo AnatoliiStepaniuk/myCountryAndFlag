@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мій прапор — myCountryAndFlag</title>
+<style>
+  :root{
+    --bg:#eef1f6;
+    --card:#ffffff;
+    --ink:#1f2933;
+    --muted:#7b8794;
+    --line:#e1e6ee;
+    --accent:#1d4ed8;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.4;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .wrap{max-width:520px;margin:0 auto;padding:16px 14px 40px;}
+
+  header{text-align:center;margin:6px 0 16px;}
+  header h1{font-size:1.4rem;margin:0;font-weight:800;letter-spacing:.2px;}
+  header p{margin:5px 0 0;color:var(--muted);font-size:.9rem;}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:14px;
+    margin-bottom:14px;
+    box-shadow:0 6px 20px rgba(31,41,51,.05);
+  }
+  .card h2{
+    font-size:.72rem;text-transform:uppercase;letter-spacing:.7px;
+    color:var(--muted);margin:0 0 12px;font-weight:700;
+  }
+
+  /* --- полотнище прапора --- */
+  .stage{display:flex;justify-content:center;}
+  .flag{
+    width:100%;max-width:420px;border-radius:8px;overflow:hidden;
+    box-shadow:0 4px 16px rgba(31,41,51,.18);
+    border:1px solid rgba(0,0,0,.08);
+  }
+  .flag svg{display:block;width:100%;height:auto;}
+  .flag rect[data-index]{cursor:pointer;}
+  .hint{font-size:.78rem;color:var(--muted);text-align:center;margin-top:10px;}
+
+  /* --- вибір розташування --- */
+  .layouts{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+  .layout-btn{
+    background:#f7f9fc;border:2px solid var(--line);border-radius:12px;
+    padding:8px 4px 6px;cursor:pointer;display:flex;flex-direction:column;
+    align-items:center;gap:6px;transition:border-color .15s, background .15s;
+  }
+  .layout-btn svg{width:100%;height:auto;border-radius:3px;}
+  .layout-btn span{font-size:.6rem;color:var(--muted);text-align:center;line-height:1.1;}
+  .layout-btn.active{border-color:var(--accent);background:#eef3ff;}
+  .layout-btn.active span{color:var(--accent);font-weight:700;}
+
+  /* --- статус --- */
+  .status{
+    font-size:.85rem;color:var(--ink);background:#f7f9fc;border:1px solid var(--line);
+    border-radius:10px;padding:9px 11px;margin-bottom:12px;
+  }
+  .status b{color:var(--accent);}
+
+  /* --- групи кольорів (основні відтінки) --- */
+  .families{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+  .fam{
+    display:flex;align-items:center;gap:7px;
+    padding:6px 12px 6px 7px;border:2px solid var(--line);border-radius:999px;
+    background:#f7f9fc;cursor:pointer;font-size:.8rem;color:var(--ink);
+  }
+  .fam .dot{width:18px;height:18px;border-radius:50%;border:1px solid rgba(0,0,0,.18);}
+  .fam.active{border-color:var(--accent);background:#eef3ff;color:var(--accent);font-weight:700;}
+
+  /* --- відтінки обраної групи --- */
+  .shades{display:grid;grid-template-columns:repeat(auto-fill,minmax(56px,1fr));gap:8px;}
+  .swatch{
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    cursor:pointer;border:none;background:none;padding:0;font:inherit;
+  }
+  .swatch .tile{
+    width:100%;aspect-ratio:1/1;border-radius:10px;
+    border:1px solid rgba(0,0,0,.14);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);
+  }
+  .swatch .cap{font-size:.58rem;color:var(--muted);text-align:center;line-height:1.05;}
+
+  /* --- дії --- */
+  .actions{display:flex;gap:8px;}
+  .btn{
+    flex:1;padding:12px;border-radius:12px;border:1px solid var(--line);
+    background:#f7f9fc;color:var(--ink);font-weight:600;font-size:.9rem;cursor:pointer;
+  }
+  .btn:active{transform:translateY(1px);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🏳️ Створи свій прапор</h1>
+    <p>Обери розташування смуг, познач секцію і зафарбуй її</p>
+  </header>
+
+  <div class="card">
+    <div class="stage">
+      <div class="flag" id="flag"></div>
+    </div>
+    <div class="hint">Торкнись секції прапора, щоб її обрати</div>
+  </div>
+
+  <div class="card">
+    <h2>1 · Розташування смуг</h2>
+    <div class="layouts" id="layouts"></div>
+  </div>
+
+  <div class="card">
+    <h2>2 · Колір обраної секції</h2>
+    <div class="status" id="status"></div>
+    <div class="families" id="families"></div>
+    <div class="shades" id="shades"></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn" id="reset">Очистити</button>
+  </div>
+</div>
+
+<script>
+  "use strict";
+
+  // Полотно прапора у «внутрішніх» координатах (співвідношення 3:2).
+  const W = 300, H = 200;
+  const DEFAULT = "#FFFFFF";
+
+  // Варіанти розташування смуг (лише горизонтальні АБО вертикальні).
+  const LAYOUTS = [
+    { key:"solid", label:"Суцільний",  n:1, dir:null },
+    { key:"v2",    label:"2 верт.",    n:2, dir:"v" },
+    { key:"v3",    label:"3 верт.",    n:3, dir:"v" },
+    { key:"h2",    label:"2 гориз.",   n:2, dir:"h" },
+    { key:"h3",    label:"3 гориз.",   n:3, dir:"h" },
+  ];
+
+  // Кольори згруповані за основними відтінками. Всередині кожної групи —
+  // реальні кольори з прапорів країн Європи (підписані країною).
+  const FAMILIES = [
+    { key:"red",    name:"Червоний",    chip:"#D52B1E", shades:[
+      { c:"Франція",    h:"#ED2939" },
+      { c:"Італія",     h:"#CE2B37" },
+      { c:"Іспанія",    h:"#AA151B" },
+      { c:"Німеччина",  h:"#DD0000" },
+      { c:"Польща",     h:"#DC143C" },
+      { c:"Данія",      h:"#C60C30" },
+      { c:"Нідерланди", h:"#AE1C28" },
+      { c:"Швейцарія",  h:"#D52B1E" },
+    ]},
+    { key:"blue",   name:"Синій",       chip:"#0057B7", shades:[
+      { c:"Україна",    h:"#0057B7" },
+      { c:"Франція",    h:"#002395" },
+      { c:"Греція",     h:"#0D5EAF" },
+      { c:"Швеція",     h:"#006AA7" },
+      { c:"Фінляндія",  h:"#003580" },
+      { c:"Нідерланди", h:"#21468B" },
+      { c:"Естонія",    h:"#0072CE" },
+      { c:"ЄС",         h:"#003399" },
+    ]},
+    { key:"green",  name:"Зелений",     chip:"#009246", shades:[
+      { c:"Італія",     h:"#009246" },
+      { c:"Ірландія",   h:"#169B62" },
+      { c:"Португалія", h:"#006600" },
+      { c:"Болгарія",   h:"#00966E" },
+      { c:"Литва",      h:"#006A44" },
+      { c:"Угорщина",   h:"#477050" },
+    ]},
+    { key:"yellow", name:"Жовтий",      chip:"#FFD100", shades:[
+      { c:"Україна",    h:"#FFD700" },
+      { c:"Німеччина",  h:"#FFCE00" },
+      { c:"Іспанія",    h:"#F1BF00" },
+      { c:"Швеція",     h:"#FECC00" },
+      { c:"Бельгія",    h:"#FDDA24" },
+      { c:"Румунія",    h:"#FCD116" },
+    ]},
+    { key:"orange", name:"Помаранчевий",chip:"#FF7F27", shades:[
+      { c:"Ірландія",   h:"#FF883E" },
+      { c:"Нідерланди", h:"#FF7F00" },
+    ]},
+    { key:"white",  name:"Білий",       chip:"#FFFFFF", shades:[
+      { c:"загальний",  h:"#FFFFFF" },
+    ]},
+    { key:"black",  name:"Чорний",      chip:"#111111", shades:[
+      { c:"загальний",  h:"#000000" },
+    ]},
+  ];
+
+  const state = {
+    layout: "v3",
+    colors: [DEFAULT, DEFAULT, DEFAULT],
+    selected: 0,
+    family: "blue",
+  };
+
+  const layoutByKey = (k) => LAYOUTS.find((l) => l.key === k);
+
+  // Обчислює прямокутники секцій для заданого розташування.
+  function sectionRects(key){
+    const L = layoutByKey(key);
+    const rects = [];
+    if (L.dir === null){
+      rects.push({ x:0, y:0, w:W, h:H });
+    } else if (L.dir === "v"){
+      const sw = W / L.n;
+      for (let i=0;i<L.n;i++) rects.push({ x:i*sw, y:0, w:sw, h:H });
+    } else {
+      const sh = H / L.n;
+      for (let i=0;i<L.n;i++) rects.push({ x:0, y:i*sh, w:W, h:sh });
+    }
+    return rects;
+  }
+
+  // Знаходить групу+країну за hex-кольором (для статусу та авто-групи).
+  function colorInfo(hex){
+    const H0 = String(hex).toLowerCase();
+    for (const f of FAMILIES){
+      const s = f.shades.find((x) => x.h.toLowerCase() === H0);
+      if (s) return { key:f.key, famName:f.name, country:s.c };
+    }
+    return null;
+  }
+
+  // --- рендер полотнища ---
+  function renderFlag(){
+    const rects = sectionRects(state.layout);
+    let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+    rects.forEach((r, i) => {
+      const fill = state.colors[i] || DEFAULT;
+      svg += `<rect data-index="${i}" x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" `
+           + `fill="${fill}" stroke="rgba(0,0,0,.08)" stroke-width="1"/>`;
+    });
+    // підсвітка обраної секції (біла підкладка + синій пунктир — видно на будь-якому кольорі)
+    const s = rects[state.selected];
+    if (s){
+      const ix=s.x+2, iy=s.y+2, iw=s.w-4, ih=s.h-4;
+      svg += `<rect x="${ix}" y="${iy}" width="${iw}" height="${ih}" fill="none" stroke="#ffffff" stroke-width="6" pointer-events="none"/>`;
+      svg += `<rect x="${ix}" y="${iy}" width="${iw}" height="${ih}" fill="none" stroke="#1d4ed8" stroke-width="3" stroke-dasharray="7 5" pointer-events="none"/>`;
+    }
+    svg += `</svg>`;
+    document.getElementById("flag").innerHTML = svg;
+  }
+
+  // --- рендер кнопок розташування (з міні-прев'ю) ---
+  function renderLayouts(){
+    const box = document.getElementById("layouts");
+    box.innerHTML = "";
+    const shades = ["#c7d0dc", "#e6ebf2", "#aeb9c8"];
+    LAYOUTS.forEach((L) => {
+      const btn = document.createElement("button");
+      btn.className = "layout-btn" + (L.key === state.layout ? " active" : "");
+      let mini = `<svg viewBox="0 0 ${W} ${H}">`;
+      sectionRects(L.key).forEach((r, i) => {
+        mini += `<rect x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" fill="${shades[i%shades.length]}" stroke="#fff" stroke-width="3"/>`;
+      });
+      mini += `</svg>`;
+      btn.innerHTML = mini + `<span>${L.label}</span>`;
+      btn.addEventListener("click", () => setLayout(L.key));
+      box.appendChild(btn);
+    });
+  }
+
+  // --- рендер груп кольорів (чіпи основних відтінків) ---
+  function renderFamilies(){
+    const box = document.getElementById("families");
+    box.innerHTML = "";
+    FAMILIES.forEach((f) => {
+      const b = document.createElement("button");
+      b.className = "fam" + (f.key === state.family ? " active" : "");
+      b.innerHTML = `<span class="dot" style="background:${f.chip}"></span>${f.name}`;
+      b.addEventListener("click", () => {
+        state.family = f.key;
+        renderFamilies();
+        renderShades();
+      });
+      box.appendChild(b);
+    });
+  }
+
+  // --- рендер відтінків обраної групи ---
+  function renderShades(){
+    const box = document.getElementById("shades");
+    box.innerHTML = "";
+    const fam = FAMILIES.find((f) => f.key === state.family) || FAMILIES[0];
+    fam.shades.forEach((s) => {
+      const b = document.createElement("button");
+      b.className = "swatch";
+      b.title = fam.name; // без назви країни — гравець має вгадати сам
+      b.innerHTML = `<span class="tile" style="background:${s.h}"></span>`;
+      b.addEventListener("click", () => applyColor(s.h));
+      box.appendChild(b);
+    });
+  }
+
+  // --- рядок статусу ---
+  function renderStatus(){
+    const total = sectionRects(state.layout).length;
+    const cur = state.colors[state.selected] || DEFAULT;
+    let label;
+    if (cur === DEFAULT){
+      label = "ще не зафарбована";
+    } else {
+      const info = colorInfo(cur);
+      label = info ? `<b>${info.famName}</b>` : `<b>${cur}</b>`;
+    }
+    document.getElementById("status").innerHTML =
+      `Обрана секція <b>${state.selected + 1}</b> / ${total} — ${label}`;
+  }
+
+  // --- дії ---
+  function setLayout(key){
+    state.layout = key;
+    const n = layoutByKey(key).n;
+    const next = [];
+    for (let i=0;i<n;i++) next.push(state.colors[i] || DEFAULT);
+    state.colors = next;
+    if (state.selected >= n) state.selected = 0;
+    renderAll();
+  }
+
+  function selectSection(i){
+    state.selected = i;
+    // якщо секція вже має колір — показуємо його групу відтінків
+    const info = colorInfo(state.colors[i]);
+    if (info) state.family = info.key;
+    renderFlag();
+    renderFamilies();
+    renderShades();
+    renderStatus();
+  }
+
+  function applyColor(hex){
+    state.colors[state.selected] = hex;
+    renderFlag();
+    renderStatus();
+  }
+
+  function reset(){
+    const n = layoutByKey(state.layout).n;
+    state.colors = new Array(n).fill(DEFAULT);
+    state.selected = 0;
+    renderAll();
+  }
+
+  function renderAll(){
+    renderFlag();
+    renderLayouts();
+    renderFamilies();
+    renderShades();
+    renderStatus();
+  }
+
+  // делегування кліку по секціях прапора
+  document.getElementById("flag").addEventListener("click", (e) => {
+    const t = e.target;
+    if (t && t.dataset && t.dataset.index !== undefined){
+      selectSection(parseInt(t.dataset.index, 10));
+    }
+  });
+  document.getElementById("reset").addEventListener("click", reset);
+
+  renderAll();
+</script>
+</body>
+</html>
