@@ -44,22 +44,42 @@
   }
   .modes button.active{border-color:var(--accent);background:#eef3ff;color:var(--accent);}
 
-  /* картка виклику */
-  .ch-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:12px;}
+  /* налаштування */
+  .setup-block{margin-bottom:16px;}
+  .setup-label{font-size:.72rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;}
+  .setup-block label{display:flex;align-items:center;gap:10px;font-size:.95rem;padding:7px 0;cursor:pointer;user-select:none;}
+  .setup-block input[type=checkbox]{width:20px;height:20px;accent-color:var(--accent);cursor:pointer;flex:none;}
+  .cont-all{border-bottom:1px dashed var(--line);margin-bottom:4px;padding-bottom:4px !important;font-weight:700;}
+  .cnt{color:var(--muted);font-size:.82rem;font-weight:600;}
+  .setup-total{font-size:.85rem;color:var(--accent);font-weight:700;margin-top:10px;}
+
+  /* картка гри */
+  .ch-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px;}
   .ch-target{font-size:.9rem;color:var(--muted);}
   .ch-target b{display:block;font-size:1.55rem;color:var(--ink);font-weight:800;margin-top:2px;}
-  .ch-score{font-size:.82rem;color:var(--muted);white-space:nowrap;text-align:right;}
-  .ch-score b{color:var(--accent);font-size:1.15rem;}
-  .diff{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:.78rem;color:var(--muted);margin-bottom:10px;}
-  .diff button{
-    padding:6px 11px;border-radius:999px;border:2px solid var(--line);
-    background:#f7f9fc;font-size:.75rem;cursor:pointer;color:var(--muted);
-  }
-  .diff button.active{border-color:var(--accent);background:#eef3ff;color:var(--accent);font-weight:700;}
-  .feedback{padding:10px 12px;border-radius:10px;font-size:.9rem;font-weight:600;margin-bottom:10px;}
+  .ch-score{font-size:.78rem;color:var(--muted);white-space:nowrap;text-align:right;}
+  .ch-score b{color:var(--accent);font-size:1.3rem;}
+  .score-detail{font-size:.76rem;color:var(--muted);margin-bottom:10px;}
+
+  .feedback{padding:10px 12px;border-radius:10px;font-size:.88rem;font-weight:600;margin-bottom:10px;}
   .feedback.ok{background:#e7f6ec;color:#1e7a3d;border:1px solid #b6e2c4;}
   .feedback.err{background:#fdeef0;color:#b23046;border:1px solid #f3c9d0;}
+  .feedback.neutral{background:#f7f9fc;color:var(--ink);border:1px solid var(--line);font-weight:600;}
+  .fb-verdict{font-size:.98rem;font-weight:800;margin-bottom:6px;}
+  .fb-line{display:flex;align-items:center;gap:6px;font-size:.86rem;padding:1px 0;}
+  .fb-line b{font-size:1rem;}
+  .fb-note{opacity:.7;font-weight:600;}
+  .mark-ok{color:#1e7a3d;}
+  .mark-no{color:#b23046;}
+
+  .correct{margin-bottom:12px;}
+  .correct-label{font-size:.8rem;color:var(--muted);font-weight:700;margin-bottom:6px;}
+  .compare{display:flex;gap:10px;}
+  .compare > div{flex:1;min-width:0;}
+  .compare .flag{max-width:100%;box-shadow:0 2px 8px rgba(31,41,51,.16);}
+
   .ch-actions{display:flex;gap:8px;flex-wrap:wrap;}
+  .newgame{margin-top:10px;width:100%;}
 
   /* полотнище */
   .stage{display:flex;justify-content:center;}
@@ -71,33 +91,21 @@
   .flag rect[data-index]{cursor:pointer;}
   .hint{font-size:.78rem;color:var(--muted);text-align:center;margin-top:10px;}
 
-  /* пресети розташування */
-  .layouts{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
-  .layout-btn{
-    background:#f7f9fc;border:2px solid var(--line);border-radius:12px;
-    padding:8px 4px 6px;cursor:pointer;display:flex;flex-direction:column;
-    align-items:center;gap:6px;transition:border-color .15s, background .15s;
-  }
-  .layout-btn svg{width:100%;height:auto;border-radius:3px;}
-  .layout-btn span{font-size:.6rem;color:var(--muted);text-align:center;line-height:1.1;}
-  .layout-btn.active{border-color:var(--accent);background:#eef3ff;}
-  .layout-btn.active span{color:var(--accent);font-weight:700;}
-
-  /* своя кількість смуг */
-  .custom{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line);}
-  .custom-label{font-size:.78rem;color:var(--muted);}
+  /* смуги: один компактний рядок */
+  .stripes{display:flex;align-items:center;gap:10px;}
+  .stripes-label{font-size:.8rem;color:var(--muted);font-weight:700;}
   .dir-toggle{display:flex;gap:6px;}
   .dir-toggle button{
-    padding:6px 10px;border-radius:999px;border:2px solid var(--line);
-    background:#f7f9fc;font-size:.75rem;cursor:pointer;color:var(--muted);
+    width:46px;height:38px;display:flex;align-items:center;justify-content:center;
+    border-radius:10px;border:2px solid var(--line);background:#f7f9fc;color:var(--muted);cursor:pointer;padding:0;
   }
-  .dir-toggle button.active{border-color:var(--accent);background:#eef3ff;color:var(--accent);font-weight:700;}
-  .stepper{display:flex;align-items:center;gap:8px;margin-left:auto;}
+  .dir-toggle button.active{border-color:var(--accent);background:#eef3ff;color:var(--accent);}
+  .stepper{display:flex;align-items:center;gap:10px;margin-left:auto;}
   .stepper button{
-    width:34px;height:34px;border-radius:9px;border:2px solid var(--line);
-    background:#f7f9fc;font-size:1.1rem;font-weight:700;cursor:pointer;color:var(--ink);line-height:1;
+    width:40px;height:38px;border-radius:10px;border:2px solid var(--line);
+    background:#f7f9fc;font-size:1.3rem;font-weight:700;cursor:pointer;color:var(--ink);line-height:1;
   }
-  .stepper #nVal{min-width:22px;text-align:center;font-weight:800;font-size:1rem;}
+  .stepper #nVal{min-width:24px;text-align:center;font-weight:800;font-size:1.15rem;}
 
   /* статус */
   .status{
@@ -116,20 +124,25 @@
   .fam.active{border-color:var(--accent);background:#eef3ff;color:var(--accent);font-weight:700;}
 
   /* відтінки */
-  .shades{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:8px;}
-  .swatch{cursor:pointer;border:none;background:none;padding:0;}
+  .shades{display:grid;grid-template-columns:repeat(auto-fill,minmax(54px,1fr));gap:8px;}
+  .swatch{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;border:none;background:none;padding:0;font:inherit;}
   .swatch .tile{
     display:block;width:100%;aspect-ratio:1/1;border-radius:10px;
     border:1px solid rgba(0,0,0,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);
   }
+  .swatch .cap{font-size:.58rem;color:var(--muted);text-align:center;line-height:1.05;}
+  .swatch.tapped .tile{outline:3px dashed var(--accent);outline-offset:2px;}
 
-  /* дії */
+  /* дії / кнопки */
   .actions{display:flex;gap:8px;}
   .btn{
-    flex:1;padding:12px;border-radius:12px;border:1px solid var(--line);
+    padding:12px;border-radius:12px;border:1px solid var(--line);
     background:#f7f9fc;color:var(--ink);font-weight:600;font-size:.9rem;cursor:pointer;
   }
   .btn.primary{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .btn.wide{width:100%;}
+  .actions .btn{flex:1;}
+  .btn:disabled{opacity:.5;cursor:not-allowed;}
   .btn:active{transform:translateY(1px);}
 </style>
 </head>
@@ -141,55 +154,77 @@
   </header>
 
   <div class="modes" id="modes">
-    <button data-mode="challenge">🎯 Виклик</button>
-    <button data-mode="free">🎨 Вільний</button>
+    <button data-mode="game">🎯 Гра</button>
+    <button data-mode="constructor">🎨 Конструктор</button>
   </div>
 
-  <div class="card" id="challengeCard">
+  <!-- НАЛАШТУВАННЯ (перед грою) -->
+  <div class="card" id="setupCard">
+    <h2>Перед грою</h2>
+    <div class="setup-block">
+      <div class="setup-label">Континенти</div>
+      <label class="cont-all"><input type="checkbox" id="cont-all"> Усі континенти <span class="cnt" id="cnt-all"></span></label>
+      <div class="cont-list">
+        <label><input type="checkbox" data-cont="Європа"> Європа <span class="cnt" data-cnt="Європа"></span></label>
+        <label><input type="checkbox" data-cont="Азія"> Азія <span class="cnt" data-cnt="Азія"></span></label>
+        <label><input type="checkbox" data-cont="Африка"> Африка <span class="cnt" data-cnt="Африка"></span></label>
+        <label><input type="checkbox" data-cont="Америка"> Америка <span class="cnt" data-cnt="Америка"></span></label>
+      </div>
+      <div class="setup-total" id="setupTotal"></div>
+    </div>
+    <div class="setup-block">
+      <div class="setup-label">Складність</div>
+      <label><input type="checkbox" id="setupExact"> Точний відтінок <span style="color:var(--muted);font-size:.82rem">(інакше — будь-який відтінок)</span></label>
+      <label><input type="checkbox" id="setupComplex"> Складні прапори <span style="color:var(--muted);font-size:.82rem">(нерівні смуги: Таїланд, Латвія…)</span></label>
+    </div>
+    <button class="btn primary wide" id="startBtn">Почати гру ▶</button>
+  </div>
+
+  <!-- ГРА -->
+  <div class="card" id="gameCard">
     <div class="ch-top">
       <div class="ch-target">Збери прапор:<b id="targetName">—</b></div>
-      <div class="ch-score">Розгадано<br><b id="score">0</b></div>
+      <div class="ch-score">Рахунок<br><b id="score">0</b></div>
     </div>
-    <div class="diff">
-      Складність:
-      <button data-diff="family">Будь-який відтінок</button>
-      <button data-diff="exact">Точний відтінок</button>
-    </div>
+    <div class="score-detail" id="scoreDetail"></div>
     <div class="feedback" id="feedback" style="display:none"></div>
+    <div class="correct" id="correct" style="display:none"></div>
     <div class="ch-actions" id="chActions"></div>
+    <button class="btn newgame" id="newGameBtn">↺ Нова гра (змінити налаштування)</button>
   </div>
 
-  <div class="card">
-    <div class="stage"><div class="flag" id="flag"></div></div>
-    <div class="hint">Торкнись секції прапора, щоб її обрати</div>
-  </div>
+  <!-- КОНСТРУКТОР ПРАПОРА (спільний для обох режимів) -->
+  <div id="builder">
+    <div class="card">
+      <div class="stage"><div class="flag" id="flag"></div></div>
+      <div class="hint">Торкнись секції прапора, щоб її обрати</div>
+    </div>
 
-  <div class="card">
-    <h2>1 · Розташування смуг</h2>
-    <div class="layouts" id="layouts"></div>
-    <div class="custom">
-      <span class="custom-label">Своя кількість:</span>
-      <div class="dir-toggle">
-        <button data-dir="v">Вертикальні</button>
-        <button data-dir="h">Горизонтальні</button>
-      </div>
-      <div class="stepper">
-        <button id="nMinus" aria-label="менше">−</button>
-        <span id="nVal">1</span>
-        <button id="nPlus" aria-label="більше">+</button>
+    <div class="card">
+      <div class="stripes">
+        <span class="stripes-label">Смуги</span>
+        <div class="dir-toggle">
+          <button data-dir="v" title="Вертикальні смуги"><svg width="20" height="15" viewBox="0 0 20 15" fill="currentColor"><rect x="0" y="0" width="5.5" height="15" rx="1"/><rect x="7.25" y="0" width="5.5" height="15" rx="1"/><rect x="14.5" y="0" width="5.5" height="15" rx="1"/></svg></button>
+          <button data-dir="h" title="Горизонтальні смуги"><svg width="20" height="15" viewBox="0 0 20 15" fill="currentColor"><rect x="0" y="0" width="20" height="4" rx="1"/><rect x="0" y="5.5" width="20" height="4" rx="1"/><rect x="0" y="11" width="20" height="4" rx="1"/></svg></button>
+        </div>
+        <div class="stepper">
+          <button id="nMinus" aria-label="менше смуг">−</button>
+          <span id="nVal">1</span>
+          <button id="nPlus" aria-label="більше смуг">+</button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="card">
-    <h2>2 · Колір обраної секції</h2>
-    <div class="status" id="status"></div>
-    <div class="families" id="families"></div>
-    <div class="shades" id="shades"></div>
-  </div>
+    <div class="card">
+      <h2>Колір обраної секції</h2>
+      <div class="status" id="status"></div>
+      <div class="families" id="families"></div>
+      <div class="shades" id="shades"></div>
+    </div>
 
-  <div class="actions">
-    <button class="btn" id="reset">Очистити кольори</button>
+    <div class="actions">
+      <button class="btn" id="reset">Очистити кольори</button>
+    </div>
   </div>
 </div>
 
@@ -199,8 +234,8 @@
   const W = 300, H = 200;      // полотно 3:2
   const DEFAULT = "#FFFFFF";
   const MAXN = 9;              // макс. кількість смуг
+  const CONTINENTS = ["Європа", "Азія", "Африка", "Америка"];
 
-  // Метадані груп кольорів.
   const FAMILY_META = {
     red:    { name:"Червоний",     chip:"#D52B1E" },
     blue:   { name:"Синій",        chip:"#0057B7" },
@@ -232,6 +267,7 @@
     { country:"Литва",      continent:"Європа", dir:"h", n:3, sections:[R("yellow","#FDB913"),R("green","#006A44"), R("red","#C1272D")] },
     { country:"Естонія",    continent:"Європа", dir:"h", n:3, sections:[R("blue","#0072CE"),  R("black","#000000"), R("white","#FFFFFF")] },
     { country:"Люксембург", continent:"Європа", dir:"h", n:3, sections:[R("red","#ED2939"),   R("white","#FFFFFF"), R("blue","#00A1DE")] },
+    { country:"Латвія",     continent:"Європа", dir:"h", n:5, sections:[R("red","#9E3039"),   R("red","#9E3039"),   R("white","#FFFFFF"), R("red","#9E3039"), R("red","#9E3039")] },
     // Азія
     { country:"Індонезія",  continent:"Азія",   dir:"h", n:2, sections:[R("red","#CE1126"),   R("white","#FFFFFF")] },
     { country:"Вірменія",   continent:"Азія",   dir:"h", n:3, sections:[R("red","#D90012"),   R("blue","#0033A0"),  R("orange","#F2A800")] },
@@ -243,23 +279,32 @@
     { country:"Гвінея",     continent:"Африка", dir:"v", n:3, sections:[R("red","#CE1126"),   R("yellow","#FCD116"),R("green","#009460")] },
     { country:"Габон",      continent:"Африка", dir:"h", n:3, sections:[R("green","#009E60"), R("yellow","#FCD116"),R("blue","#3A75C4")] },
     { country:"Чад",        continent:"Африка", dir:"v", n:3, sections:[R("blue","#002664"),  R("yellow","#FECB00"),R("red","#C60C30")] },
+    { country:"Гамбія",     continent:"Африка", dir:"h", n:5, sections:[R("red","#CE1126"), R("white","#FFFFFF"), R("blue","#0C1C8C"), R("white","#FFFFFF"), R("green","#3A7728")], accept:[[R("red","#CE1126"), R("blue","#0C1C8C"), R("green","#3A7728")]] },
+    { country:"Ботсвана",   continent:"Африка", dir:"h", n:5, sections:[R("blue","#75AADB"), R("white","#FFFFFF"), R("black","#000000"), R("white","#FFFFFF"), R("blue","#75AADB")], accept:[[R("blue","#75AADB"), R("black","#000000"), R("blue","#75AADB")]] },
     // Америка
     { country:"Перу",       continent:"Америка",dir:"v", n:3, sections:[R("red","#D91023"),   R("white","#FFFFFF"), R("red","#D91023")] },
     { country:"Болівія",    continent:"Америка",dir:"h", n:3, sections:[R("red","#D52B1E"),   R("yellow","#F9E300"),R("green","#007934")] },
+    { country:"Колумбія",   continent:"Америка",dir:"h", n:4, sections:[R("yellow","#FCD116"),R("yellow","#FCD116"),R("blue","#003893"), R("red","#CE1126")] },
   ];
 
-  // Палітра будується з бази → кожен колір цілі гарантовано доступний.
+  // Палітра з бази + «представницька» країна відтінку (для підписів у Конструкторі).
   function buildPalette(){
     const byFam = {};
+    const firstCountry = {};
     FAMILY_ORDER.forEach((f) => { byFam[f] = []; });
     FLAGS.forEach((fl) => fl.sections.forEach((s) => {
-      const arr = byFam[s.fam] || (byFam[s.fam] = []);
-      if (!arr.some((h) => h.toLowerCase() === s.h.toLowerCase())) arr.push(s.h);
+      const key = s.h.toLowerCase();
+      if (!(key in firstCountry)){ firstCountry[key] = fl.country; byFam[s.fam].push(s.h); }
     }));
+    const label = (h) => {
+      const key = h.toLowerCase();
+      if (key === "#ffffff" || key === "#000000") return "загальний";
+      return firstCountry[key] || "";
+    };
     return FAMILY_ORDER
-      .filter((f) => byFam[f] && byFam[f].length)
+      .filter((f) => byFam[f].length)
       .map((f) => ({ key:f, name:FAMILY_META[f].name, chip:FAMILY_META[f].chip,
-                     shades: byFam[f].map((h) => ({ h })) }));
+                     shades: byFam[f].map((h) => ({ h, country: label(h) })) }));
   }
   const FAMILIES = buildPalette();
 
@@ -271,31 +316,28 @@
     return null;
   }
 
-  const PRESETS = [
-    { label:"Суцільний", dir:null, n:1 },
-    { label:"2 верт.",   dir:"v",  n:2 },
-    { label:"3 верт.",   dir:"v",  n:3 },
-    { label:"2 гориз.",  dir:"h",  n:2 },
-    { label:"3 гориз.",  dir:"h",  n:3 },
-  ];
-
   const state = {
-    mode: "challenge",
-    difficulty: "family",
-    dir: null,           // null | "v" | "h"
-    n: 1,
+    mode: "game",              // "game" | "constructor"
+    gameStarted: false,
+    exact: false,              // задається на старті
+    continents: new Set(CONTINENTS),
+    includeComplex: true,
+    pool: FLAGS.slice(),
+    dir: null, n: 1,
     colors: [DEFAULT],
     selected: 0,
+    showSel: false,
     family: "blue",
     target: null,
-    lastTargetIdx: -1,
+    lastCountry: null,
     solved: false,
     revealed: false,
+    checked: false,
     feedback: null,
-    score: 0,
+    guessed: 0,
+    skipped: 0,
   };
 
-  // Прямокутники секцій для (напрям, кількість).
   function sectionRects(dir, n){
     const rects = [];
     if (dir === null || n <= 1){
@@ -310,6 +352,56 @@
     return rects;
   }
 
+  // Ключ кольору для порівняння: точний hex або родина кольору.
+  function keyFns(exact){
+    return {
+      hex:  (hex) => exact ? String(hex || DEFAULT).toLowerCase() : (familyOf(hex) || ""),
+      band: (b)   => exact ? b.h.toLowerCase() : b.fam,
+    };
+  }
+  // Склеює сусідні однакові ключі (товщина/кількість смуг не важлива).
+  function collapseKeys(keys){
+    const out = [];
+    for (const k of keys) if (!out.length || out[out.length - 1] !== k) out.push(k);
+    return out;
+  }
+  function seqEqual(a, b){
+    if (a.length !== b.length) return false;
+    for (let i=0;i<a.length;i++) if (a[i] !== b[i]) return false;
+    return true;
+  }
+  function countSeqMatches(a, b){
+    if (a.length === b.length){
+      let c = 0; for (let i=0;i<a.length;i++) if (a[i] === b[i]) c++; return c;
+    }
+    const bb = b.slice(); let c = 0;
+    for (const x of a){ const j = bb.indexOf(x); if (j >= 0){ bb.splice(j,1); c++; } }
+    return c;
+  }
+  // Однаковий набір кольорів (без урахування порядку).
+  function multisetEqual(a, b){
+    if (a.length !== b.length) return false;
+    const sa = a.slice().sort(); const sb = b.slice().sort();
+    for (let i=0;i<sa.length;i++) if (sa[i] !== sb[i]) return false;
+    return true;
+  }
+  // Рендер еталонного прапора (масштабується до контейнера — показуємо в повний розмір).
+  function flagSVG(dir, sections){
+    const rects = sectionRects(dir, sections.length);
+    let s = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
+    rects.forEach((r, i) => { s += `<rect x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" fill="${sections[i].h}"/>`; });
+    return s + `</svg>`;
+  }
+
+  // Прапор «складний», якщо має злиті смуги (повтори) або спрощені accept-варіанти.
+  FLAGS.forEach((f) => {
+    f.complex = (f.accept && f.accept.length > 0) ||
+      collapseKeys(f.sections.map((s) => s.h.toLowerCase())).length !== f.sections.length;
+  });
+  function availCount(cont){
+    return FLAGS.filter((f) => f.continent === cont && (state.includeComplex || !f.complex)).length;
+  }
+
   function renderFlag(){
     const rects = sectionRects(state.dir, state.n);
     let svg = `<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
@@ -319,7 +411,7 @@
            + `fill="${fill}" stroke="rgba(0,0,0,.08)" stroke-width="1"/>`;
     });
     const s = rects[state.selected];
-    if (s){
+    if (s && state.showSel){
       const ix=s.x+2, iy=s.y+2, iw=s.w-4, ih=s.h-4;
       svg += `<rect x="${ix}" y="${iy}" width="${iw}" height="${ih}" fill="none" stroke="#ffffff" stroke-width="6" pointer-events="none"/>`;
       svg += `<rect x="${ix}" y="${iy}" width="${iw}" height="${ih}" fill="none" stroke="#1d4ed8" stroke-width="3" stroke-dasharray="7 5" pointer-events="none"/>`;
@@ -328,26 +420,17 @@
     document.getElementById("flag").innerHTML = svg;
   }
 
-  function renderPresets(){
-    const box = document.getElementById("layouts");
-    box.innerHTML = "";
-    const shades = ["#c7d0dc", "#e6ebf2", "#aeb9c8"];
-    PRESETS.forEach((p) => {
-      const active = (p.dir === state.dir && p.n === state.n);
-      const btn = document.createElement("button");
-      btn.className = "layout-btn" + (active ? " active" : "");
-      let mini = `<svg viewBox="0 0 ${W} ${H}">`;
-      sectionRects(p.dir, p.n).forEach((r, i) => {
-        mini += `<rect x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}" fill="${shades[i%shades.length]}" stroke="#fff" stroke-width="3"/>`;
-      });
-      mini += `</svg>`;
-      btn.innerHTML = mini + `<span>${p.label}</span>`;
-      btn.addEventListener("click", () => setLayout(p.dir, p.n));
-      box.appendChild(btn);
-    });
+  // Пунктир навколо обраної секції показуємо коротко, потім ховаємо —
+  // щоб було видно справжній вигляд прапора (важлива товщина смуг).
+  let selTimer = null;
+  function flashSelection(){
+    state.showSel = true;
+    renderFlag();
+    if (selTimer) clearTimeout(selTimer);
+    selTimer = setTimeout(() => { state.showSel = false; renderFlag(); }, 2500);
   }
 
-  function renderCustom(){
+  function renderStripes(){
     document.querySelectorAll("[data-dir]").forEach((b) =>
       b.classList.toggle("active", b.dataset.dir === state.dir));
     document.getElementById("nVal").textContent = state.n;
@@ -368,13 +451,19 @@
   function renderShades(){
     const box = document.getElementById("shades");
     box.innerHTML = "";
+    const showCap = state.mode === "constructor";
     const fam = FAMILIES.find((f) => f.key === state.family) || FAMILIES[0];
     fam.shades.forEach((s) => {
       const b = document.createElement("button");
       b.className = "swatch";
-      b.title = fam.name;
-      b.innerHTML = `<span class="tile" style="background:${s.h}"></span>`;
-      b.addEventListener("click", () => applyColor(s.h));
+      b.title = showCap ? `${fam.name} — ${s.country}` : fam.name;
+      b.innerHTML = `<span class="tile" style="background:${s.h}"></span>`
+                  + (showCap ? `<span class="cap">${s.country}</span>` : ``);
+      b.addEventListener("click", () => {
+        applyColor(s.h);
+        b.classList.add("tapped");
+        setTimeout(() => b.classList.remove("tapped"), 700);
+      });
       box.appendChild(b);
     });
   }
@@ -401,20 +490,65 @@
     return b;
   }
 
-  function renderChallenge(){
+  function renderSetup(){
+    document.querySelectorAll("[data-cont]").forEach((cb) => {
+      cb.checked = state.continents.has(cb.dataset.cont);
+    });
+    document.getElementById("cont-all").checked = state.continents.size === CONTINENTS.length;
+    document.getElementById("setupExact").checked = state.exact;
+    document.getElementById("setupComplex").checked = state.includeComplex;
+    // лічильники доступних країн (з урахуванням «складних»)
+    document.querySelectorAll("[data-cnt]").forEach((el) => {
+      el.textContent = "(" + availCount(el.dataset.cnt) + ")";
+    });
+    const totalAll = FLAGS.filter((f) => state.includeComplex || !f.complex).length;
+    document.getElementById("cnt-all").textContent = "(" + totalAll + ")";
+    let total = 0;
+    state.continents.forEach((c) => { total += availCount(c); });
+    document.getElementById("setupTotal").textContent =
+      `Доступно прапорів: ${total} із ${totalAll}`;
+    document.getElementById("startBtn").disabled = total === 0;
+  }
+
+  function renderGame(){
     document.getElementById("targetName").textContent = state.target ? state.target.country : "—";
-    document.getElementById("score").textContent = state.score;
-    document.querySelectorAll("[data-diff]").forEach((b) =>
-      b.classList.toggle("active", b.dataset.diff === state.difficulty));
+    document.getElementById("score").textContent = state.guessed - state.skipped;
+    document.getElementById("scoreDetail").textContent =
+      `Вгадано: ${state.guessed} · Пропущено: ${state.skipped}`;
 
     const fb = document.getElementById("feedback");
-    if (state.feedback){
+    if (state.feedback && state.feedback.lines){
+      const f = state.feedback;
+      fb.style.display = "";
+      fb.className = "feedback neutral";
+      let html = `<div class="fb-verdict ${f.solved ? "mark-ok" : "mark-no"}">${f.solved ? "Зараховано ✅" : "Не зараховано ❌"}</div>`;
+      f.lines.forEach((l) => {
+        html += `<div class="fb-line"><span>${l.label}:</span> <b class="${l.ok ? "mark-ok" : "mark-no"}">${l.ok ? "✓" : "✗"}</b>`
+              + (l.note ? ` <span class="fb-note">(${l.note})</span>` : "") + `</div>`;
+      });
+      fb.innerHTML = html;
+    } else if (state.feedback){
       fb.style.display = "";
       fb.className = "feedback " + (state.feedback.ok ? "ok" : "err");
       fb.textContent = state.feedback.msg;
     } else {
       fb.style.display = "none";
       fb.textContent = "";
+    }
+
+    const cbox = document.getElementById("correct");
+    if (state.checked && state.target){
+      const t2 = state.target;
+      const userSecs = state.colors.map((h) => ({ h }));
+      cbox.innerHTML =
+        `<div class="compare">`
+        + `<div><div class="correct-label">Твій вибір:</div><div class="flag">${flagSVG(state.dir, userSecs)}</div></div>`
+        + `<div><div class="correct-label">Наш еталон${state.exact ? " (точні)" : ""}:</div><div class="flag">${flagSVG(t2.dir, t2.sections)}</div></div>`
+        + `</div>`;
+      cbox.style.display = "";
+    } else {
+      cbox.style.display = "none";
+      cbox.innerHTML = "";
     }
 
     const box = document.getElementById("chActions");
@@ -428,48 +562,82 @@
     }
   }
 
-  // --- виклик ---
+  // --- гра ---
   function pickTarget(){
-    let idx;
-    do { idx = Math.floor(Math.random() * FLAGS.length); }
-    while (FLAGS.length > 1 && idx === state.lastTargetIdx);
-    state.lastTargetIdx = idx;
-    state.target = FLAGS[idx];
+    const pool = state.pool.length ? state.pool : FLAGS;
+    let pick = pool[0];
+    if (pool.length > 1){
+      do { pick = pool[Math.floor(Math.random() * pool.length)]; }
+      while (pick.country === state.lastCountry);
+    }
+    state.lastCountry = pick.country;
+    state.target = pick;
     state.solved = false;
     state.revealed = false;
+    state.checked = false;
     state.feedback = null;
-    state.dir = null;          // чистий старт
+    state.dir = null;
     state.n = 1;
     state.colors = [DEFAULT];
     state.selected = 0;
+    state.showSel = false;
   }
 
-  function nextTarget(){ pickTarget(); renderAll(); }
+  function startGame(){
+    state.exact = document.getElementById("setupExact").checked;
+    state.includeComplex = document.getElementById("setupComplex").checked;
+    const pool = FLAGS.filter((f) => state.continents.has(f.continent) && (state.includeComplex || !f.complex));
+    if (!pool.length) return;
+    state.pool = pool;
+    state.guessed = 0;
+    state.skipped = 0;
+    state.lastCountry = null;
+    state.gameStarted = true;
+    pickTarget();
+    renderAll();
+  }
+
+  function newGame(){
+    state.gameStarted = false;
+    renderAll();
+  }
+
+  function nextTarget(){
+    if (state.target && !state.solved) state.skipped++;
+    pickTarget();
+    renderAll();
+  }
 
   function check(){
     const t = state.target;
     if (!t) return;
-    if (state.dir !== t.dir || state.n !== t.n){
-      state.feedback = { ok:false, msg:"Не те розташування смуг — спробуй інше." };
-      renderChallenge();
-      return;
-    }
-    let correct = 0;
-    for (let i=0;i<t.n;i++){
-      const got = state.colors[i] || DEFAULT;
-      const want = t.sections[i];
-      const ok = state.difficulty === "exact"
-        ? got.toLowerCase() === want.h.toLowerCase()
-        : familyOf(got) === want.fam;
-      if (ok) correct++;
-    }
-    if (correct === t.n){
-      if (!state.solved){ state.solved = true; state.score++; }
-      state.feedback = { ok:true, msg:"Правильно! 🎉" };
+    state.checked = true;
+    const kf = keyFns(state.exact);
+    const userSeq = collapseKeys(state.colors.map(kf.hex));
+    const dirOk = (state.dir === t.dir);
+    const patterns = [t.sections].concat(t.accept || []).map((p) => collapseKeys(p.map(kf.band)));
+    const solved = dirOk && patterns.some((p) => seqEqual(userSeq, p));
+    let lines;
+    if (solved){
+      if (!state.solved){ state.solved = true; state.guessed++; }
+      lines = [
+        { label:"Напрямок",     ok:true },
+        { label:"Кольори",      ok:true },
+        { label:"Розташування", ok:true },
+      ];
     } else {
-      state.feedback = { ok:false, msg:`Розташування вірне. Правильних кольорів: ${correct} з ${t.n}.` };
+      const canon = patterns[0];
+      const colorsOk = multisetEqual(userSeq, canon);
+      const orderOk = seqEqual(userSeq, canon);
+      const k = countSeqMatches(userSeq, canon);
+      lines = [
+        { label:"Напрямок",     ok:dirOk },
+        { label:"Кольори",      ok:colorsOk, note: colorsOk ? "" : `${k} з ${canon.length}` },
+        { label:"Розташування", ok:orderOk },
+      ];
     }
-    renderChallenge();
+    state.feedback = { solved, lines };
+    renderGame();
   }
 
   function reveal(){
@@ -504,7 +672,7 @@
     state.selected = i;
     const fk = familyOf(state.colors[i]);
     if (fk) state.family = fk;
-    renderFlag();
+    flashSelection();
     renderFamilies();
     renderShades();
     renderStatus();
@@ -513,9 +681,9 @@
   function applyColor(hex){
     state.colors[state.selected] = hex;
     state.feedback = null;
-    renderFlag();
+    flashSelection();
     renderStatus();
-    if (state.mode === "challenge") renderChallenge();
+    if (state.mode === "game" && state.gameStarted) renderGame();
   }
 
   function reset(){
@@ -527,22 +695,27 @@
 
   function setMode(m){
     state.mode = m;
-    if (m === "challenge" && !state.target) pickTarget();
     renderAll();
   }
 
   function renderAll(){
+    const showSetup = state.mode === "game" && !state.gameStarted;
+    const showGame  = state.mode === "game" && state.gameStarted;
+    const showBuilder = state.mode === "constructor" || showGame;
+
     document.querySelectorAll("[data-mode]").forEach((b) =>
       b.classList.toggle("active", b.dataset.mode === state.mode));
-    document.getElementById("challengeCard").style.display =
-      state.mode === "challenge" ? "" : "none";
+    document.getElementById("setupCard").style.display = showSetup ? "" : "none";
+    document.getElementById("gameCard").style.display = showGame ? "" : "none";
+    document.getElementById("builder").style.display = showBuilder ? "" : "none";
+
     renderFlag();
-    renderPresets();
-    renderCustom();
+    renderStripes();
     renderFamilies();
     renderShades();
     renderStatus();
-    if (state.mode === "challenge") renderChallenge();
+    if (showSetup) renderSetup();
+    if (showGame) renderGame();
   }
 
   // --- слухачі ---
@@ -555,14 +728,27 @@
   document.getElementById("reset").addEventListener("click", reset);
   document.querySelectorAll("[data-mode]").forEach((b) =>
     b.addEventListener("click", () => setMode(b.dataset.mode)));
-  document.querySelectorAll("[data-diff]").forEach((b) =>
-    b.addEventListener("click", () => { state.difficulty = b.dataset.diff; state.feedback = null; renderChallenge(); }));
+
+  document.querySelectorAll("[data-cont]").forEach((cb) =>
+    cb.addEventListener("change", () => {
+      if (cb.checked) state.continents.add(cb.dataset.cont);
+      else state.continents.delete(cb.dataset.cont);
+      renderSetup();
+    }));
+  document.getElementById("cont-all").addEventListener("change", (e) => {
+    state.continents = new Set(e.target.checked ? CONTINENTS : []);
+    renderSetup();
+  });
+  document.getElementById("setupExact").addEventListener("change", (e) => { state.exact = e.target.checked; });
+  document.getElementById("setupComplex").addEventListener("change", (e) => { state.includeComplex = e.target.checked; renderSetup(); });
+  document.getElementById("startBtn").addEventListener("click", startGame);
+  document.getElementById("newGameBtn").addEventListener("click", newGame);
+
   document.querySelectorAll("[data-dir]").forEach((b) =>
     b.addEventListener("click", () => setLayout(b.dataset.dir, Math.max(state.n, 2))));
   document.getElementById("nMinus").addEventListener("click", () => setLayout(state.dir, state.n - 1));
   document.getElementById("nPlus").addEventListener("click", () => setLayout(state.dir, state.n + 1));
 
-  pickTarget();
   renderAll();
 </script>
 </body>
