@@ -175,7 +175,7 @@
     <div class="setup-block">
       <div class="setup-label">Складність</div>
       <label><input type="checkbox" id="setupExact"> Точний відтінок <span style="color:var(--muted);font-size:.82rem">(інакше — будь-який відтінок)</span></label>
-      <label><input type="checkbox" id="setupComplex"> Складні прапори <span style="color:var(--muted);font-size:.82rem">(нерівні смуги: Таїланд, Латвія…)</span></label>
+      <label><input type="checkbox" id="setupComplex"> Нерівні смуги <span style="color:var(--muted);font-size:.82rem">(Таїланд, Латвія, Колумбія…)</span></label>
     </div>
     <button class="btn primary wide" id="startBtn">Почати гру ▶</button>
   </div>
@@ -321,7 +321,7 @@
     gameStarted: false,
     exact: false,              // задається на старті
     continents: new Set(CONTINENTS),
-    includeComplex: true,
+    includeComplex: false,
     pool: FLAGS.slice(),
     dir: null, n: 1,
     colors: [DEFAULT],
